@@ -25,7 +25,7 @@ jobs:
       run: echo "export const settings = {host:\"http://localhost:3030\"}" > src/config.js
     - name: Start BackEnd
       run: npm run start-be &
-    - name: Start FrontEdn
+    - name: Start FrontEnd
       run: npm run start-fe &
     - name: Install Browsers
       run: npx playwright install 
@@ -36,18 +36,24 @@ jobs:
     needs: build_test
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v3
-        - uses: JorgeLNJunior/render-deploy@v1.4.4
+        - name: Checkpout the repository
+          uses: actions/checkout@v3
+        - name: Deploy BackEnd
+          uses: johnbeynon/render-deploy-action@v0.0.8
           with:
-            service_id: ${{ secrets.MY_RENDER_SERVICE_ID_BE }}
-            api_key: ${{ secrets.MY_RENDER_API_KEY }}
+            service-id: ${{ secrets.MY_RENDER_SERVICE_ID_BE }}
+            api-key: ${{ secrets.MY_RENDER_API_KEY }}
+            wait-for-success: true
 
   deploy-fe:
     needs: build_test
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v3
-        - uses: JorgeLNJunior/render-deploy@v1.4.4
+        - name: Checkout the repository
+          uses: actions/checkout@v3
+        - name: Deploy FrontEnd
+          uses: johnbeynon/render-deploy-action@v0.0.8
           with:
-            service_id: ${{ secrets.MY_RENDER_SERVICE_ID_FE }}
-            api_key: ${{ secrets.MY_RENDER_API_KEY }}
+            service-id: ${{ secrets.MY_RENDER_SERVICE_ID_FE }}
+            api-key: ${{ secrets.MY_RENDER_API_KEY }}
+            wait-for-success: true
