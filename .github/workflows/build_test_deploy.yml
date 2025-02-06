@@ -26,4 +26,4 @@ jobs:
     - name: Start FrontEdn
       run: npm run start-fe &
     - name: Execute UI tests
-      run: npm start test:ui
+      run: npm run test:ui
